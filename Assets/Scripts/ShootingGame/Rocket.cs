@@ -11,7 +11,7 @@ public class Rocket : MonoBehaviour
     {
         if(this.enabled)
         {
-            Destroy(this.gameObject);
+            Despawn();
         }
     }
 
@@ -33,6 +33,24 @@ public class Rocket : MonoBehaviour
         {
             return;
         }
-        Destroy(this.gameObject);
+        Despawn();
+    }
+
+    void Despawn()
+    {
+        if (!gameObject.activeSelf)
+        {
+            return;
+        }
+        var p = PathologicalGames.PoolManager.Pools["mypool"];
+
+        if(p.IsSpawned(transform))
+        {
+            p.Despawn(transform);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 }
